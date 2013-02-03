@@ -29,7 +29,6 @@ Meteor.startup ->
     cap: 10000
     slideshow_id: id
     broadcasting: false
-
   Slides.insert
     slideshow_id: id
     page: 1
@@ -48,3 +47,4 @@ Meteor.startup ->
       puts markdown.to_html
       ```
       """
+

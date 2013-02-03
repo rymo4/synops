@@ -35,6 +35,9 @@ Template.in_room.events "click #start_game": ->
     Router.startGame room.encoded_name
     console.log "GAME STARTED"
 
+Template.home.join_room = ->
+  !Session.get('player_id')
+
 Template.in_room.current_player = ->
   Players.findOne _id: Session.get("player_id")
 

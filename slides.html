@@ -22,11 +22,11 @@
 
 <template name="home">
   {{#if current_room}}
-    {{#unless current_room.broadcasting}}
+    {{#if join_room}}
       {{>in_room}}
     {{else}}
       {{>slideshow}}
-    {{/unless}}
+    {{/if}}
   {{else}}
     {{>new_room}}
   {{/if}}

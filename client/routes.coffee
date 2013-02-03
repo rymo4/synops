@@ -37,9 +37,10 @@ RoomRouter = Backbone.Router.extend(
   setRoom: (encoded_name) ->
     localStorage.setItem "encoded_name", encoded_name
     Session.set "encoded_name", encoded_name
-    if Rooms.findOne(encoded_name: encoded_name).broadcasting
-      console.log(Rooms.findOne(encoded_name: encoded_name).broadcasting)
-      Router.goToSlide(encoded_name, Number(Session.get('current_slide') || 1))
+    room = Rooms.findOne encoded_name: encoded_name
+    if room.broadcasting
+      alert()
+      Router.goToSlide(encoded_name, Number(room.current_page || 1))
     @navigate encoded_name
 )
 
