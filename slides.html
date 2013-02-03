@@ -7,7 +7,7 @@
   {{>nav}}
   <div class="row">
     <div class="twelve columns">
-      {{>home}}
+      {{renderPage}}
     </div>
   </div>
 </body>
@@ -21,15 +21,8 @@
 </template>
 
 <template name="home">
-  {{#if current_room}}
-    {{#if join_room}}
-      {{>in_room}}
-    {{else}}
-      {{>slideshow}}
-    {{/if}}
-  {{else}}
-    {{>new_room}}
-  {{/if}}
+  Welcome!
+  {{>new_room}}
 </template>
 
 <template name="slideshow">
@@ -42,41 +35,7 @@
       <div id="epiceditor"></div>
     </div>
   {{else}}
-    Loading
-  {{/if}}
-</template>
-
-<template name="in_room">
-  {{#if room_full}}
-    <h3>Sorry, the room is full</h3>
-  {{else}}
-    {{#if current_player}}
-      <h4 class="subheader">Currenly in {{current_room.name}}.</h4>
-    {{else}}
-      <h4 class="subheader">You are about to join {{current_room.name}}.</h4>
-      {{>new_player}}
-    {{/if}}
-
-    {{#if players.length}}
-      <table class="twelve">
-        <thead>
-          <tr><th>Players</th></tr>
-        </thead>
-        {{#if current_player}}
-          <tr><td>You</td></tr>
-        {{/if}}
-      {{#each other_players}}
-        <tr>
-          <td>{{name}}</td>
-        </tr>
-      {{/each}}
-      </table>
-      {{#if current_player.host}}
-        <input id="start_game" class="button large radius" type="button" value="Begin!">
-      {{/if}}
-    {{else}}
-      <h3 class="subheader">Nobody is here yet.</h3>
-    {{/if}}
+    Loading...
   {{/if}}
 </template>
 

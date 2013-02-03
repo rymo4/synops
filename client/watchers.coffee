@@ -21,6 +21,7 @@ Template.new_player.events {
       Session.set "player_id", id
     else
       Session.set "room_full", true
+    Meteor.Router.to "/#{encoded_name}/#{room.current_slide}"
   }
 
 Meteor.startup ->

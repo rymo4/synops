@@ -14,7 +14,7 @@ Template.slideshow.current_slide = ->
   slideshow = Slideshows.findOne _id: room.slideshow_id
   Slides.findOne(
     slideshow_id: slideshow._id
-    page: (Session.get('current_slide') || 1)
+    page: Number(Session.get('current_slide') || 1)
   )
 
 marked.setOptions(
@@ -30,15 +30,15 @@ Template.slideshow.current_player = ->
   Players.findOne _id: Session.get("player_id")
 
 goToSlide = (name, slide_num) ->
-    Router.goToSlide(name, slide_num)
-    Session.set('current_slide', slide_num)
-    Rooms.update {
-      encoded_name: name
-    }, {
-      $set: {
-        current_slide: slide_num
-      }
+  Meteor.Router.to "/#{name}/#{slide_num}"
+  Session.set('current_slide', slide_num)
+  Rooms.update {
+    encoded_name: name
+  }, {
+    $set: {
+      current_slide: slide_num
     }
+  }
 
 Template.slideshow.events
   'click #next_slide': ->

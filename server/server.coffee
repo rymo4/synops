@@ -23,8 +23,8 @@ Meteor.startup ->
   Rooms.remove({})
   id = Slideshows.insert
     name: "test"
-    current_page: 1
   Rooms.insert
+    current_slide: 1
     encoded_name: "test"
     cap: 10000
     slideshow_id: id
@@ -47,4 +47,3 @@ Meteor.startup ->
       puts markdown.to_html
       ```
       """
-
