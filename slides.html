@@ -1,0 +1,92 @@
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
+  <title>test_app</title>
+</head>
+
+<body>
+  {{>nav}}
+  <div class="row">
+    <div class="twelve columns">
+      {{>home}}
+    </div>
+  </div>
+</body>
+
+<template name="nav">
+  <nav class="top-bar">
+    <ul>
+      <li class="name"><h1><a href="/">Lightbulb</a></h1></li>
+    </ul>
+  </nav>
+</template>
+
+<template name="home">
+  {{#if current_room}}
+    {{#unless current_room.broadcasting}}
+      {{>in_room}}
+    {{else}}
+      {{>slideshow}}
+    {{/unless}}
+  {{else}}
+    {{>new_room}}
+  {{/if}}
+</template>
+
+<template name="slideshow">
+  {{#if current_player.host}}
+    <button class="button" id="previous_slide"> Back </button>
+    <button class="button" id="next_slide"> Next </button>
+  {{/if}}
+  {{#if current_slide}}
+    <div class="panel">
+      <div id="epiceditor"></div>
+    </div>
+  {{else}}
+    Loading
+  {{/if}}
+</template>
+
+<template name="in_room">
+  {{#if room_full}}
+    <h3>Sorry, the room is full</h3>
+  {{else}}
+    {{#if current_player}}
+      <h4 class="subheader">Currenly in {{current_room.name}}.</h4>
+    {{else}}
+      <h4 class="subheader">You are about to join {{current_room.name}}.</h4>
+      {{>new_player}}
+    {{/if}}
+
+    {{#if players.length}}
+      <table class="twelve">
+        <thead>
+          <tr><th>Players</th></tr>
+        </thead>
+        {{#if current_player}}
+          <tr><td>You</td></tr>
+        {{/if}}
+      {{#each other_players}}
+        <tr>
+          <td>{{name}}</td>
+        </tr>
+      {{/each}}
+      </table>
+      {{#if current_player.host}}
+        <input id="start_game" class="button large radius" type="button" value="Begin!">
+      {{/if}}
+    {{else}}
+      <h3 class="subheader">Nobody is here yet.</h3>
+    {{/if}}
+  {{/if}}
+</template>
+
+<template name="new_room">
+  <h3 class="subheader">Get Started</h3>
+  <input id="room_name" type="text" placeholder="Room Name"/>
+  <input class="button large radius" id="new_room" type="button" value="Make The Room"/>
+</template>
+
+<template name="new_player">
+  <input id="player_name" type="text" placeholder="Enter Your Name to Get Started"/>
+  <input class="button large radius" id="new_player" type="button" value="Join"/>
+</template>
