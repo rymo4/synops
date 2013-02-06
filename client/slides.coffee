@@ -10,7 +10,6 @@ Meteor.subscribe('slideshows')
 Template.slideshow.current_slide = ->
   return undefined if Slideshows.find().fetch().length is 0
   room = Rooms.findOne encoded_name: Session.get('encoded_name')
-  console.log room
   slideshow = Slideshows.findOne _id: room.slideshow_id
   Slides.findOne(
     slideshow_id: slideshow._id
@@ -28,6 +27,11 @@ marked.setOptions(
 
 Template.slideshow.current_player = ->
   Players.findOne _id: Session.get("player_id")
+
+Template.people.people = ->
+  name = Session.get 'encoded_name'
+  room = Rooms.findOne encoded_name: name
+  Players.find(room_id: room._id).fetch()
 
 goToSlide = (name, slide_num) ->
   Meteor.Router.to "/#{name}/#{slide_num}"

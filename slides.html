@@ -33,10 +33,15 @@
   {{#if current_slide}}
     <div class="panel">
       <div id="epiceditor"></div>
+      {{>people}}
     </div>
   {{else}}
     Loading...
   {{/if}}
+</template>
+
+<template name="people">
+  {{people.length}} people are here.
 </template>
 
 <template name="new_room">

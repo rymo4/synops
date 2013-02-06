@@ -2,7 +2,6 @@ Players    = new Meteor.Collection("players")
 Rooms      = new Meteor.Collection("rooms")
 Slideshows = new Meteor.Collection('slideshows')
 Slides     = new Meteor.Collection('slides')
-
 Meteor.publish 'slides', (encoded_name) ->
   room = Rooms.findOne encoded_name: encoded_name
   slideshow = Slideshows.findOne _id: room.slideshow_id
