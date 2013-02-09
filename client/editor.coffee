@@ -25,7 +25,6 @@ Template.slideshow.rendered = ->
   editor.on 'save', ->
     markdown = this.getElement('editor').body.innerHTML.replace(/<br>/g, '\n').replace(/<\/?div>/g, '')
     console.log markdown
-    #.replace(/<br>/g, '\n')
     room = Rooms.findOne encoded_name: Session.get('encoded_name')
     slideshow_id = room.slideshow_id
     slide_selector =

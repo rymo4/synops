@@ -45,6 +45,16 @@ goToSlide = (name, slide_num) ->
   }
 
 Template.slideshow.events
+  'click #new_slide': ->
+    encoded_name = Session.get 'encoded_name'
+    room = Rooms.findOne encoded_name: encoded_name
+    num_slides = Slides.find(slideshow_id: room.slideshow_id).fetch().length
+    id = Slides.insert
+      slideshow_id: room.slideshow_id
+      page: num_slides + 1
+      text: '# Change Me!' # Tie in for templates
+    console.log id
+
   'click #next_slide': ->
     name = Session.get 'encoded_name'
     next = Number(Session.get('current_slide')) + 1
