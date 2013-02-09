@@ -37,11 +37,6 @@ Template.slide_list.slides = ->
       preview: slide.text.substring(0, 20) + '...'
       callout: if (slide.page == Number(Session.get('current_slide'))) then 'callout' else ''
 
-Template.people.people = ->
-  name = Session.get 'encoded_name'
-  room = Rooms.findOne encoded_name: name
-  Players.find(room_id: room._id).fetch()
-
 goToSlide = (name, slide_num) ->
   Meteor.Router.to "/#{name}/#{slide_num}"
   Session.set('current_slide', slide_num)
@@ -52,12 +47,16 @@ goToSlide = (name, slide_num) ->
       current_slide: slide_num
     }
   }
+
+Template.slide_list.presentation_mode_on = -> Session.get('presentation_mode')
+Template.slideshow.presentation_mode_on = -> Session.get('presentation_mode')
+
 Template.slide_list.events
   'click .slide_preview': (e) ->
     num = Number $(e.target).attr('data-slide-num')
     goToSlide(Session.get('encoded_name'), num)
 
-Template.slide_controls.events
+Template.slide_list.events
   'click #new_slide': ->
     encoded_name = Session.get 'encoded_name'
     room = Rooms.findOne encoded_name: encoded_name
@@ -68,6 +67,12 @@ Template.slide_controls.events
       text: '# Change Me!' # Tie in for templates
     goToSlide(encoded_name, num_slides + 1)
 
+Template.slideshow.watchers = -> Players.find()
+
+Template.slide_controls.events
+  'click #presentation_mode': ->
+    mode_on = Session.get 'presentation_mode'
+    Session.set('presentation_mode', !mode_on)
   'click #next_slide': ->
     name = Session.get 'encoded_name'
     next = Number(Session.get('current_slide')) + 1

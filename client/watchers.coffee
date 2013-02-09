@@ -27,3 +27,5 @@ Template.new_player.events {
 Meteor.startup ->
   # Use this for localStorage reactivity
   Session.set "player_id", localStorage.getItem("player_id")
+
+Template.new_player.room_name = -> Session.get('encoded_name')
