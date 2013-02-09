@@ -87,8 +87,9 @@ Meteor.startup ->
     slideshow_id: id
     page: 5
     text: """
-      # Run Arbitraty JavaScript in Your Slides
+      # Run Arbitrary JavaScript on Your Slides
       <iframe style="width: 100%; height: 100%" src="http://jsfiddle.net/uzMPU/embedded/result/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
+      # Great for demos!
       """
     shownotes: """
       This is what happens when [Notch](http://en.wikipedia.org/wiki/Markus_Persson) makes a [JSFiddle](http://jsfiddle.net/).
@@ -96,15 +97,6 @@ Meteor.startup ->
   Slides.insert
     slideshow_id: id
     page: 6
-    text: """
-      # Run Arbitraty JavaScript in Your Slides
-      # Great for demos!
-
-    """
-    shownotes: "Like this one."
-  Slides.insert
-    slideshow_id: id
-    page: 7
     text: """
       # Show Off Code
 
@@ -121,10 +113,11 @@ Meteor.startup ->
     shownotes: "Yeah, this code is ugly."
   Slides.insert
     slideshow_id: id
-    page: 8
+    page: 7
     text: """
       # Edit in Realtme
       * Remove the lag between editing and practicing
       * Google Drive style collaboration
     """
     shownotes: "[Look how easy this is in Meteor](http://www.skalb.com/2012/04/16/creating-a-document-sharing-site-with-meteor-js/)"
+
