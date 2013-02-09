@@ -28,6 +28,9 @@ marked.setOptions(
 Template.slideshow.current_player = ->
   Players.findOne _id: Session.get("player_id")
 
+Template.slide_controls.current_player = ->
+  Players.findOne _id: Session.get("player_id")
+
 Template.slide_list.slides = ->
   _.map Slides.find().fetch(), (slide) ->
     _.defaults slide,
@@ -50,7 +53,7 @@ goToSlide = (name, slide_num) ->
     }
   }
 
-Template.slideshow.events
+Template.slide_controls.events
   'click #new_slide': ->
     encoded_name = Session.get 'encoded_name'
     room = Rooms.findOne encoded_name: encoded_name

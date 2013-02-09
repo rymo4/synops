@@ -17,7 +17,18 @@
     <ul>
       <li class="name"><h1><a href="/">Synops</a></h1></li>
     </ul>
+    {{>slide_controls}}
   </nav>
+</template>
+
+<template name="slide_controls">
+  {{#if current_player.host}}
+  <ul class="right">
+    <li><a id="previous_slide"> Back </a></li>
+    <li><a id="next_slide"> Next </a></li>
+    <li><a id="new_slide">New slide</a></li>
+  </ul>
+  {{/if}}
 </template>
 
 <template name="home">
@@ -26,11 +37,6 @@
 </template>
 
 <template name="slideshow">
-  {{#if current_player.host}}
-    <button class="button" id="previous_slide"> Back </button>
-    <button class="button" id="next_slide"> Next </button>
-    <button class="button" id="new_slide">New slide</button>
-  {{/if}}
   {{#if current_slide}}
     {{#if current_player.host}}
       {{>slide_list}}
