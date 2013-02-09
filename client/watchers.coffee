@@ -1,7 +1,13 @@
 Players = new Meteor.Collection("players")
-Meteor.autosubscribe ->
-  encoded_name = Session.get 'encoded_name'
-  Meteor.subscribe "players", encoded_name if encoded_name
+
+#Meteor.startup ->
+#  Meteor.autosubscribe ->
+    #encoded_name = Session.get 'encoded_name'
+    #   encoded_name = localStorage.getItem('encoded_name')
+    #alert(encoded_name)
+    #Meteor.subscribe("players", encoded_name) if encoded_name
+
+Meteor.subscribe('players', 'devfest')
 
 Template.new_player.events {
   'click #new_player': ->
@@ -11,16 +17,13 @@ Template.new_player.events {
     room_cap = room.cap
     room_id  = room._id
     players_in_room = Players.find(room_id: room_id).fetch()
-    if players_in_room.length < room_cap
-      id = Players.insert(
-        name: player_name
-        room_id: room_id
-        host: (players_in_room.length is 0)
-      )
-      localStorage.setItem "player_id", id
-      Session.set "player_id", id
-    else
-      Session.set "room_full", true
+    id = Players.insert(
+      name: player_name
+      room_id: room_id
+      host: (players_in_room.length is 0)
+    )
+    localStorage.setItem "player_id", id
+    Session.set "player_id", id
     Meteor.Router.to "/#{encoded_name}/#{room.current_slide}"
   }
 

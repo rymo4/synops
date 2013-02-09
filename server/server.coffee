@@ -10,11 +10,12 @@ Meteor.publish 'slides', (encoded_name) ->
 
 Meteor.publish 'slideshows', -> Slideshows.find()
 
+
 Meteor.publish "rooms", -> Rooms.find()
 
-Meteor.publish "players", (encoded_name) ->
-  room_id = Rooms.findOne(encoded_name: encoded_name)._id
-  Players.find room_id: room_id
+Meteor.publish "players",->
+  #room_id = Rooms.findOne(encoded_name: encoded_name)._id
+  Players.find()
 
 Meteor.startup ->
   Slides.remove({})
@@ -29,12 +30,12 @@ Meteor.startup ->
     cap: 10000
     slideshow_id: id
     broadcasting: false
+
   Slides.insert
     slideshow_id: id
     page: 1
     text: """
       # Synops - Slideshows for Hackers
-      
       ## syn·apse
       ### /ˈsinˌaps/, Noun
       > A junction between two nerve cells, consisting of a minute gap across which impulses pass by diffusion of a neurotransmitter.
@@ -111,13 +112,57 @@ Meteor.startup ->
       ```
     """
     shownotes: "Yeah, this code is ugly."
+
+
+
   Slides.insert
     slideshow_id: id
     page: 7
     text: """
+      # Show Off Code
+
+      Perl one liner to compute primes ([source](http://en.wikipedia.org/wiki/One-liner_program)):
+      ```perl
+        my $z = sub { grep { $a=$_; !grep { !($a % $_) } (2..$_-1)} (2..$_[0]) }
+      ```
+
+      Haskell version ([source](http://blog.fogus.me/2011/06/03/10-haskell-one-liners-to-impress-your-friends/)):
+      ```haskell
+        let pgen (p:xs) = p : pgen [x|x <- xs, x `mod` p > 0]
+      ```
+      # Embed Images
+    """
+    shownotes: "Yeah, this code is ugly."
+
+
+  Slides.insert
+    slideshow_id: id
+    page: 8
+    text: """
+      # Show Off Code
+
+      Perl one liner to compute primes ([source](http://en.wikipedia.org/wiki/One-liner_program)):
+      ```perl
+        my $z = sub { grep { $a=$_; !grep { !($a % $_) } (2..$_-1)} (2..$_[0]) }
+      ```
+
+      Haskell version ([source](http://blog.fogus.me/2011/06/03/10-haskell-one-liners-to-impress-your-friends/)):
+      ```haskell
+        let pgen (p:xs) = p : pgen [x|x <- xs, x `mod` p > 0]
+      ```
+      # Embed Images
+      # Give Your Watchers Notes & [Links](http://static.tumblr.com/43dff6eda70a4d35feb9e31476d9f9fa/hkpykny/3Xkmg6b33/tumblr_static_meme.jpg)
+    """
+
+
+    shownotes: "This is a note. [This is a link](http://assets.diylol.com/hfs/a07/c62/896/resized/most-interesting-programmer-meme-generator-he-once-released-a-bug-into-production-just-to-see-how-it-felt-c5ee4e.jpg?1341343503.jpg)."
+  Slides.insert
+    slideshow_id: id
+    page: 9
+    text: """
       # Edit in Realtme
       * Remove the lag between editing and practicing
-      * Google Drive style collaboration
+      * *Google Drive* style collaboration
     """
     shownotes: "[Look how easy this is in Meteor](http://www.skalb.com/2012/04/16/creating-a-document-sharing-site-with-meteor-js/)"
 

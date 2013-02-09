@@ -8,7 +8,7 @@ Meteor.autosubscribe ->
 Meteor.subscribe('slideshows')
 
 Template.slideshow.current_slide = ->
-  return undefined if Slideshows.find().fetch().length is 0
+  return undefined if Rooms.find().fetch().length is 0 or Slideshows.find().fetch().length is 0
   room = Rooms.findOne encoded_name: Session.get('encoded_name')
   slideshow = Slideshows.findOne _id: room.slideshow_id
   Slides.findOne(
@@ -39,6 +39,7 @@ Template.slide_list.slides = ->
 
 goToSlide = (name, slide_num) ->
   Meteor.Router.to "/#{name}/#{slide_num}"
+  localStorageName.setItem 'last_slide', slide_num
   Session.set('current_slide', slide_num)
   Rooms.update {
     encoded_name: name
@@ -48,8 +49,8 @@ goToSlide = (name, slide_num) ->
     }
   }
 
-Template.slide_list.presentation_mode_on = -> Session.get('presentation_mode')
-Template.slideshow.presentation_mode_on = -> Session.get('presentation_mode')
+Template.slide_list.presentation_mode_on = -> Synops.presentation_mode()
+Template.slideshow.presentation_mode_on = -> Synops.presentation_mode()
 
 Template.slide_list.events
   'click .slide_preview': (e) ->
@@ -69,10 +70,18 @@ Template.slide_list.events
 
 Template.slideshow.watchers = -> Players.find()
 
+Synops =
+  presentation_mode: (_on = undefined) ->
+    if typeof _on == undefined
+      if localStorage.getItem('presentation_mode_on') == 'true' then true else false
+    else
+      localStorage.setItem('presentation_mode_on', _on)
+      Session.set('presentation_mode_on', _on)
+
 Template.slide_controls.events
   'click #presentation_mode': ->
     mode_on = Session.get 'presentation_mode'
-    Session.set('presentation_mode', !mode_on)
+    Synops.presentation_mode mode_on
   'click #next_slide': ->
     name = Session.get 'encoded_name'
     next = Number(Session.get('current_slide')) + 1
