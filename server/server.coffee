@@ -33,8 +33,8 @@ Meteor.startup ->
     slideshow_id: id
     page: 1
     text: """
-      # Synops
-      ### Slideshows for Hackers
+      # Synops 
+      > Slideshows for Hackers
     """
   Slides.insert
     slideshow_id: id

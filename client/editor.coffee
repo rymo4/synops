@@ -5,6 +5,11 @@ editor_opts =
   localStorageName: 'epiceditor'
   useNativeFullsreen: true
   parser: marked
+  theme:
+    #preview: '/epiceditor/themes/preview/github.css'
+    preview: '/themes/preview/github.css'
+    base:'/themes/base/epiceditor.css'
+    editor:'/themes/editor/epic-dark.css'
   file:
     name: 'epiceditor'
     defaultContent: ''
@@ -23,7 +28,7 @@ Template.slideshow.rendered = ->
   editor.open filename
   editor.removeListener 'edit'
   editor.on 'save', ->
-    markdown = this.getElement('editor').body.innerHTML.replace(/<br>/g, '\n').replace(/<\/?div>/g, '')
+    markdown = this.getElement('editor').body.innerHTML.replace(/<br>/g, '\n').replace(/<\/?div>/g, '').replace('&lt;', '<').replace('&gt;', '>')
     console.log markdown
     room = Rooms.findOne encoded_name: Session.get('encoded_name')
     slideshow_id = room.slideshow_id

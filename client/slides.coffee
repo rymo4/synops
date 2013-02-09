@@ -52,6 +52,10 @@ goToSlide = (name, slide_num) ->
       current_slide: slide_num
     }
   }
+Template.slide_list.events
+  'click .slide_preview': (e) ->
+    num = Number $(e.target).attr('data-slide-num')
+    goToSlide(Session.get('encoded_name'), num)
 
 Template.slide_controls.events
   'click #new_slide': ->
