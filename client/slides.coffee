@@ -32,7 +32,7 @@ Template.slide_controls.current_player = ->
   Players.findOne _id: Session.get("player_id")
 
 Template.slide_list.slides = ->
-  _.map Slides.find().fetch(), (slide) ->
+  _.map Slides.find({}, sort: {page: 1}).fetch(), (slide) ->
     _.defaults slide,
       preview: slide.text.substring(0, 20) + '...'
       callout: if (slide.page == Number(Session.get('current_slide'))) then 'callout' else ''

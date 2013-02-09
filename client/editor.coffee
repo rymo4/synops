@@ -20,6 +20,9 @@ editor_opts =
     fullscreen: 70
     preview: 80
 
+decode = (str) ->
+  $("<div></div>").html(str).text()
+
 Template.slideshow.rendered = ->
   editor = new EpicEditor(editor_opts).load()
   filename = "slide-#{Session.get('current_slide')}"
@@ -28,7 +31,12 @@ Template.slideshow.rendered = ->
   editor.open filename
   editor.removeListener 'edit'
   editor.on 'save', ->
-    markdown = this.getElement('editor').body.innerHTML.replace(/<br>/g, '\n').replace(/<\/?div>/g, '').replace('&lt;', '<').replace('&gt;', '>')
+    markdown = this.getElement('editor').body.innerHTML
+      .replace(/<br>/g, '\n')
+      .replace(/<\/?div>/g, '')
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/;amp;/g, ';')
     console.log markdown
     room = Rooms.findOne encoded_name: Session.get('encoded_name')
     slideshow_id = room.slideshow_id
