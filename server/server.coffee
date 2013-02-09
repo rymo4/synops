@@ -22,17 +22,20 @@ Meteor.startup ->
   Players.remove({})
   Rooms.remove({})
   id = Slideshows.insert
-    name: "test"
+    name: "devfest"
   Rooms.insert
     current_slide: 1
-    encoded_name: "test"
+    encoded_name: "devfest"
     cap: 10000
     slideshow_id: id
     broadcasting: false
   Slides.insert
     slideshow_id: id
     page: 1
-    text: "# Title Goes here\n\nThis is a paragraph.\n\n`this is code`"
+    text: """
+      # Synops
+      ### Slideshows for Hackers
+    """
   Slides.insert
     slideshow_id: id
     page: 2

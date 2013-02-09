@@ -28,6 +28,12 @@ marked.setOptions(
 Template.slideshow.current_player = ->
   Players.findOne _id: Session.get("player_id")
 
+Template.slide_list.slides = ->
+  _.map Slides.find().fetch(), (slide) ->
+    _.defaults slide,
+      preview: slide.text.substring(0, 20) + '...'
+      callout: if (slide.page == Number(Session.get('current_slide'))) then 'callout' else ''
+
 Template.people.people = ->
   name = Session.get 'encoded_name'
   room = Rooms.findOne encoded_name: name
@@ -49,11 +55,11 @@ Template.slideshow.events
     encoded_name = Session.get 'encoded_name'
     room = Rooms.findOne encoded_name: encoded_name
     num_slides = Slides.find(slideshow_id: room.slideshow_id).fetch().length
-    id = Slides.insert
+    Slides.insert
       slideshow_id: room.slideshow_id
       page: num_slides + 1
       text: '# Change Me!' # Tie in for templates
-    console.log id
+    goToSlide(encoded_name, num_slides + 1)
 
   'click #next_slide': ->
     name = Session.get 'encoded_name'

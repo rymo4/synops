@@ -1,6 +1,6 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
-  <title>test_app</title>
+  <title>Synops - Slides for Hackers</title>
 </head>
 
 <body>
@@ -15,7 +15,7 @@
 <template name="nav">
   <nav class="top-bar">
     <ul>
-      <li class="name"><h1><a href="/">Lightbulb</a></h1></li>
+      <li class="name"><h1><a href="/">Synops</a></h1></li>
     </ul>
   </nav>
 </template>
@@ -32,6 +32,9 @@
     <button class="button" id="new_slide">New slide</button>
   {{/if}}
   {{#if current_slide}}
+    {{#if current_player.host}}
+      {{>slide_list}}
+    {{/if}}
     <div class="panel">
       <div id="epiceditor"></div>
       {{>people}}
@@ -39,6 +42,16 @@
   {{else}}
     Loading...
   {{/if}}
+</template>
+
+<template name="slide_list">
+  <div class="row slide_bar">
+    {{#each slides}}
+      <div class="radius {{callout}} slide-preview panel columns two end" data-slide-num="{{page}}">
+        {{page}} - {{preview}}
+      </div>
+    {{/each}}
+  </div>
 </template>
 
 <template name="people">
