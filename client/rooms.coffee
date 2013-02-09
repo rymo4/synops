@@ -34,16 +34,6 @@ Template.home.current_room = ->
 Template.nav.current_room = ->
   Rooms.findOne encoded_name: Session.get('encoded_name')
 
-Template.in_room.current_room = ->
-  Rooms.findOne encoded_name: Session.get('encoded_name')
-
-Template.in_room.players = ->
-  Players.find({}).fetch()
-
-Template.in_room.other_players = ->
-  Players.find _id:
-    $ne: Session.get("player_id")
-
 Meteor.startup ->
   # Use this for localStorage reactivity
   encoded_name = localStorage.getItem 'encoded_name'

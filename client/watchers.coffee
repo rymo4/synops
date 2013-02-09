@@ -27,6 +27,3 @@ Template.new_player.events {
 Meteor.startup ->
   # Use this for localStorage reactivity
   Session.set "player_id", localStorage.getItem("player_id")
-
-Template.in_room.room_full = ->
-  Session.get "room_full"
